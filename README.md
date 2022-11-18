@@ -12,7 +12,7 @@ ssh-keygen -t ed25519 -C <nome-da-chave> -f <arquivo>
 
 ## AWS IAM
 
-Adicionar as seguintes permitessões ao grupo de operadores:
+Adicionar as seguintes permissões ao grupo de operadores:
 
 - `AmazonEC2FullAccess`
 - `AmazonVPCFullAccess`

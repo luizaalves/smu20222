@@ -68,13 +68,13 @@
     },
 
     "KeyName": {
-      "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "Description": "Name of an existing EC2 KeyPair to enable applications access to the instances",
       "Type": "AWS::EC2::KeyPair::KeyName",
       "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
     },
 
-    "SSHLocation": {
-      "Description": "The IP address range that can be used to SSH to the EC2 instances",
+    "AppsLocation": {
+      "Description": "The IP address range that can be used to SSH, HTTP and HTTPS to the EC2 instances",
       "Type": "String",
       "MinLength": "9",
       "MaxLength": "18",
@@ -267,7 +267,7 @@
         "HVMG2": "NOT_SUPPORTED"
       },
       "sa-east-1": {
-        "HVM64": "ami-0a52e8a6018e92bb0",
+        "HVM64": "ami-04b3c23ec8efcc2d6", 
         "HVMG2": "NOT_SUPPORTED"
       },
       "us-east-1": {
@@ -320,13 +320,25 @@
     "InstanceSecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
-        "GroupDescription": "Enable SSH access",
+        "GroupDescription": "Enable TCP access",
         "SecurityGroupIngress": [
           {
             "IpProtocol": "tcp",
             "FromPort": "22",
             "ToPort": "22",
-            "CidrIp": { "Ref": "SSHLocation" }
+            "CidrIp": { "Ref": "AppsLocation" }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "80",
+            "ToPort": "80",
+            "CidrIp": { "Ref": "AppsLocation" }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "443",
+            "ToPort": "443",
+            "CidrIp": { "Ref": "AppsLocation" }
           }
         ]
       }
